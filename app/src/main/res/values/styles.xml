@@ -8,4 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MainTV" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
+    <style name="MainTV2" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
 </resources>

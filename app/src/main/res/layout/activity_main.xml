@@ -5,20 +5,91 @@
     android:layout_height="match_parent"
     tools:context="peter.skydev.quickest.MainActivity">
 
-    <TextView
-        android:id="@+id/textToClick"
+    <LinearLayout
+        android:id="@+id/LayoutTV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Pulsa cuando el color sea rojo"
-        android:layout_centerInParent="true"
-        android:background="@color/colorGreen"
-        android:gravity="center" />
-
-    <TextView
-        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:text="ASDASD"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvPosition"
+            style="@style/MainTV"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/tvPosition" />
+
+        <TextView
+            android:id="@+id/tvScore"
+            style="@style/MainTV"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/tvScore" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutYourTV"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/LayoutTV"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvYourPosition"
+            style="@style/MainTV2"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/tvPositionDef"/>
+
+        <TextView
+            android:id="@+id/tvYourScore"
+            style="@style/MainTV2"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/tvScoreDef"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="5dp"
+        android:layout_below="@id/layoutYourTV"
+        android:background="@android:color/darker_gray" />
+
+    <Button
+        android:id="@+id/gameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="5dp"
+        android:text="@string/gameButton" />
+
+    <Button
+        android:id="@+id/rulesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gameButton"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="5dp"
+        android:text="@string/rulesButton" />
+
+    <Button
+        android:id="@+id/leaderboardButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rulesButton"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="5dp"
+        android:text="@string/leaderboardButton" />
 
 </RelativeLayout>

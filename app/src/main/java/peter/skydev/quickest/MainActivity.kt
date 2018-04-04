@@ -1,17 +1,29 @@
 package peter.skydev.quickest
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        gameButton.setOnClickListener {
+            val intent = Intent(this, Game::class.java)
+            startActivity(intent)
+        }
+
+        rulesButton.setOnClickListener {
+            val intent = Intent(this, Rules::class.java)
+            startActivity(intent)
+        }
+
+        leaderboardButton.setOnClickListener {
+            
+        }
     }
 }
