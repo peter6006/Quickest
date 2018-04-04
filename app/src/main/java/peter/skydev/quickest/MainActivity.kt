@@ -23,7 +23,7 @@ class MainActivity : Activity() {
         }
 
         leaderboardButton.setOnClickListener {
-            
+
         }
     }
 }

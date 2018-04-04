@@ -9,4 +9,10 @@
     <string name="tvScore">Score</string>
     <string name="tvPositionDef">0</string>
     <string name="tvScoreDef">0</string>
+
+    <!-- GAME -->
+    <string name="gameMSG">Tap when the colour turns red</string>
+    <string name="gameMSGFinish">Finish!</string>
+    <string name="gameMSGError">You must tap when the colour is red, not when its green</string>
+
 </resources>

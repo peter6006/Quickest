@@ -9,17 +9,28 @@
         android:id="@+id/textToClick"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Pulsa cuando el color sea rojo"
         android:layout_centerInParent="true"
         android:background="@color/colorGreen"
-        android:gravity="center" />
+        android:gravity="center"
+        android:text="@string/gameMSG"
+        android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/gameStep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
         android:gravity="center"
-        android:text="ASDASD"/>
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/individualScoreTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp" />
 
 </RelativeLayout>
 
