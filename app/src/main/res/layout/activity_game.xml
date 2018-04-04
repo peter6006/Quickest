@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="peter.skydev.quickest.Game">
+    tools:context="peter.skydev.quickest.MainActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/textToClick"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Pulsa cuando el color sea rojo"
+        android:layout_centerInParent="true"
+        android:background="@color/colorGreen"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="ASDASD"/>
+
+</RelativeLayout>
+
