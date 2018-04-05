@@ -1,9 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="peter.skydev.quickest.Result">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/resultMSG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="38sp"
+        android:textColor="@color/colorBlack"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="@string/resultMSG" />
+
+    <TextView
+        android:id="@+id/yourResult"
+        android:layout_below="@id/resultMSG"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"
+        android:textColor="@color/colorBlack"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/resultMSGEquivalent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="34sp"
+        android:layout_below="@id/yourResult"
+        android:textColor="@color/colorBlack"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="@string/resultMSGEquivalent" />
+
+    <TextView
+        android:id="@+id/yourEquivalent"
+        android:layout_width="wrap_content"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/resultMSGEquivalent"
+        android:textColor="@color/colorBlack"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/LayoutTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingTop="30dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/repeatButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/resultMSGRepeat" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/uploadButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/resultMSGUpload" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:layout_below="@id/LayoutTV"
+        android:text="@string/resultMSGBack" />
+</RelativeLayout>

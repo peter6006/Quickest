@@ -15,4 +15,11 @@
     <string name="gameMSGFinish">Finish!</string>
     <string name="gameMSGError">You must tap when the colour is red, not when its green</string>
 
+    <!-- RESULT -->
+    <string name="resultMSG">Your result:</string>
+    <string name="resultMSGEquivalent">It is equivalent to:</string>
+    <string name="resultMSGUpload">Upload Result</string>
+    <string name="resultMSGRepeat">Repeat Game</string>
+    <string name="resultMSGBack">Back</string>
+
 </resources>
