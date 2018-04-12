@@ -9,6 +9,8 @@ import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.util.Patterns
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 import io.vrinda.kotlinpermissions.PermissionCallBack
 import io.vrinda.kotlinpermissions.PermissionsActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,10 +22,20 @@ class MainActivity : PermissionsActivity() {
 
     private val TAG = "MainActivity"
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var userDataDB: DatabaseReference
+    private lateinit var db: FirebaseDatabase
+    var currentUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        mAuth = FirebaseAuth.getInstance()
+        this.currentUser = mAuth!!.currentUser
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
+        db = FirebaseDatabase.getInstance()
+        userDataDB = db.getReference("UserData")
 
         if (android.os.Build.VERSION.SDK_INT >= 23) {
             val permissionCheck = ContextCompat.checkSelfPermission(this,
@@ -34,12 +46,16 @@ class MainActivity : PermissionsActivity() {
                     override fun permissionGranted() {
                         super.permissionGranted()
                         Log.v("Call permissions", "Granted")
-                        mAuth = FirebaseAuth.getInstance()
 
                         mAuth.createUserWithEmailAndPassword(getEmail(), "passwordDefault")
                                 .addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                         Log.d(TAG, "User created successfully!")
+                                        currentUser = mAuth!!.currentUser
+                                        userDataDB.child(currentUser!!.uid).child("UserEmail").setValue(currentUser!!.email)
+                                        userDataDB.child(currentUser!!.uid).child("UserScore").setValue(0)
+                                        userDataDB.child(currentUser!!.uid).child("UserPosition").setValue(0)
+                                        userDataDB.child(currentUser!!.uid).child("UserName").setValue("")
                                     } else {
                                         Log.d(TAG, "There was an error creating the user")
                                     }
@@ -58,6 +74,16 @@ class MainActivity : PermissionsActivity() {
                 Log.d(TAG, "Permission granted")
             }
         }
+
+        userDataDB.child(currentUser!!.uid).child("UserScore").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                tvYourScore.setText(p0!!.getValue().toString())
+            }
+        })
 
         gameButton.setOnClickListener {
             val intent = Intent(this, Game::class.java)
