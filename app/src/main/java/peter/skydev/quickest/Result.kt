@@ -1,20 +1,29 @@
 package peter.skydev.quickest
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_result.*
+import org.jetbrains.anko.toast
 import java.util.*
 
 class Result : Activity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var userDataDB: DatabaseReference
+    private lateinit var userNamesDB: DatabaseReference
+    private lateinit var userNamesDataSnapshot: DataSnapshot
     private lateinit var db: FirebaseDatabase
     var currentUser: FirebaseUser? = null
+    var userName: String = ""
+    private var result: Long = 0
+    private val TAG: String = "Result"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,8 +35,9 @@ class Result : Activity() {
         FirebaseDatabase.getInstance()
         db = FirebaseDatabase.getInstance()
         userDataDB = db.getReference("UserData")
+        userNamesDB = db.getReference("UserNames")
 
-        val result: Long = intent.getLongExtra("finalScore", 0)
+        result = intent.getLongExtra("finalScore", 0)
 
         yourResult.text = Objects.toString(result, "Error")
         yourEquivalent.text = Objects.toString((result / 1000000000.0), "").substring(0, 5) + " s"
@@ -39,13 +49,59 @@ class Result : Activity() {
             startActivity(intent)
         }
 
+        userDataDB.child(currentUser!!.uid).child("UserName").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {}
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                userName = p0!!.value.toString()
+            }
+        })
+
+        userNamesDB.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {}
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                userNamesDataSnapshot = p0!!
+            }
+        })
         uploadButton.setOnClickListener {
-            // TODO Firebase system
-            userDataDB.child(currentUser!!.uid).child("UserScore").setValue(result)
+            if (userName.equals("")) {
+                showNewNameDialog()
+            } else {
+                userDataDB.child(currentUser!!.uid).child("UserScore").setValue(result)
+            }
         }
 
         backButton.setOnClickListener {
             finish()
         }
+    }
+
+    fun showNewNameDialog() {
+        val dialogBuilder = AlertDialog.Builder(this)
+        val inflater = this.layoutInflater
+        val dialogView = inflater.inflate(R.layout.custom_dialog, null)
+        dialogBuilder.setView(dialogView)
+
+        val editText = dialogView.findViewById<View>(R.id.editTextName) as EditText
+
+        dialogBuilder.setMessage(resources.getString(R.string.resultAddName))
+        dialogBuilder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, whichButton ->
+            if (!userNamesDataSnapshot.hasChild(editText.text.toString())) {
+                userDataDB.child(currentUser!!.uid).child("UserName").setValue(editText.text.toString())
+                userDataDB.child(currentUser!!.uid).child("UserScore").setValue(result)
+
+                userNamesDB.child(userName).removeValue()
+                userNamesDB.child(editText.text.toString()).setValue(currentUser!!.uid)
+            } else {
+                toast(resources.getString(R.string.resultAddNameExists))
+                showNewNameDialog()
+            }
+        })
+        dialogBuilder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, whichButton ->
+            //pass
+        })
+        val b = dialogBuilder.create()
+        b.show()
     }
 }

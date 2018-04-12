@@ -21,5 +21,7 @@
     <string name="resultMSGUpload">Upload Result</string>
     <string name="resultMSGRepeat">Repeat Game</string>
     <string name="resultMSGBack">Back</string>
+    <string name="resultAddName">With which name you want to be known?</string>
+    <string name="resultAddNameExists">This name already exists</string>
 
 </resources>

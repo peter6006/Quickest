@@ -107,12 +107,10 @@ class MainActivity : PermissionsActivity() {
         userDataDB = db.getReference("UserData")
 
         userDataDB.child(currentUser!!.uid).child("UserScore").addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+            override fun onCancelled(p0: DatabaseError?) {}
 
             override fun onDataChange(p0: DataSnapshot?) {
-                tvYourScore.setText(p0!!.getValue().toString())
+                tvYourScore.text = p0!!.value.toString()
             }
         })
     }
