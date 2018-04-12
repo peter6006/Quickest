@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import com.google.firebase.auth.FirebaseAuth
@@ -12,6 +13,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_result.*
 import org.jetbrains.anko.toast
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
 
 class Result : Activity() {
@@ -19,6 +22,7 @@ class Result : Activity() {
     private lateinit var userDataDB: DatabaseReference
     private lateinit var userNamesDB: DatabaseReference
     private lateinit var userNamesDataSnapshot: DataSnapshot
+    private lateinit var leaderboardDataDB: DatabaseReference
     private lateinit var db: FirebaseDatabase
     var currentUser: FirebaseUser? = null
     var userName: String = ""
@@ -36,6 +40,7 @@ class Result : Activity() {
         db = FirebaseDatabase.getInstance()
         userDataDB = db.getReference("UserData")
         userNamesDB = db.getReference("UserNames")
+        leaderboardDataDB = db.getReference("Leaderboard")
 
         result = intent.getLongExtra("finalScore", 0)
 
@@ -64,11 +69,12 @@ class Result : Activity() {
                 userNamesDataSnapshot = p0!!
             }
         })
+
         uploadButton.setOnClickListener {
             if (userName.equals("")) {
                 showNewNameDialog()
             } else {
-                userDataDB.child(currentUser!!.uid).child("UserScore").setValue(result)
+                uploadToFirebase()
             }
         }
 
@@ -89,7 +95,7 @@ class Result : Activity() {
         dialogBuilder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, whichButton ->
             if (!userNamesDataSnapshot.hasChild(editText.text.toString())) {
                 userDataDB.child(currentUser!!.uid).child("UserName").setValue(editText.text.toString())
-                userDataDB.child(currentUser!!.uid).child("UserScore").setValue(result)
+                uploadToFirebase()
 
                 userNamesDB.child(userName).removeValue()
                 userNamesDB.child(editText.text.toString()).setValue(currentUser!!.uid)
@@ -103,5 +109,35 @@ class Result : Activity() {
         })
         val b = dialogBuilder.create()
         b.show()
+    }
+
+    fun uploadToFirebase(){
+        userDataDB.child(currentUser!!.uid).child("UserScore").setValue(result)
+
+        // TODO update leaderbord
+        userDataDB.orderByChild("UserScore").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {}
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                var jsonArray = JSONArray()
+
+                for (messageSnapshot in p0!!.getChildren()) {
+                    Log.d(TAG, "Snapshot: " + messageSnapshot.toString())
+                    var job = JSONObject()
+                    job.put("UserScore", messageSnapshot.child("UserScore").getValue())
+                    job.put("UserName", messageSnapshot.child("UserName").getValue())
+                    job.put("appid", messageSnapshot.key as String)
+                    jsonArray.put(job)
+                }
+
+                for(j in 0..jsonArray.length()-1){
+                    leaderboardDataDB.child(Integer.toString(j+1)).child("appid").setValue(jsonArray.getJSONObject(j).getString("appid"))
+                    leaderboardDataDB.child(Integer.toString(j+1)).child("UserScore").setValue(jsonArray.getJSONObject(j).getInt("UserScore"))
+                    leaderboardDataDB.child(Integer.toString(j+1)).child("UserName").setValue(jsonArray.getJSONObject(j).getString("UserName"))
+
+                    userDataDB.child(jsonArray.getJSONObject(j).getString("appid")).child("UserPosition").setValue(j+1)
+                }
+            }
+        })
     }
 }

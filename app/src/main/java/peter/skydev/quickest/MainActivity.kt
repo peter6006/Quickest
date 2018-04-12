@@ -113,6 +113,14 @@ class MainActivity : PermissionsActivity() {
                 tvYourScore.text = p0!!.value.toString()
             }
         })
+
+        userDataDB.child(currentUser!!.uid).child("UserPosition").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {}
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                tvYourPosition.text = p0!!.value.toString()
+            }
+        })
     }
 
     private fun getEmail(): String {
