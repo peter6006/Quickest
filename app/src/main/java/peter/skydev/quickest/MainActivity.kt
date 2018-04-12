@@ -33,10 +33,6 @@ class MainActivity : PermissionsActivity() {
         mAuth = FirebaseAuth.getInstance()
         this.currentUser = mAuth!!.currentUser
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
-        db = FirebaseDatabase.getInstance()
-        userDataDB = db.getReference("UserData")
-
         if (android.os.Build.VERSION.SDK_INT >= 23) {
             val permissionCheck = ContextCompat.checkSelfPermission(this,
                     android.Manifest.permission.GET_ACCOUNTS)
@@ -56,8 +52,18 @@ class MainActivity : PermissionsActivity() {
                                         userDataDB.child(currentUser!!.uid).child("UserScore").setValue(0)
                                         userDataDB.child(currentUser!!.uid).child("UserPosition").setValue(0)
                                         userDataDB.child(currentUser!!.uid).child("UserName").setValue("")
+
+                                        setListeners()
                                     } else {
                                         Log.d(TAG, "There was an error creating the user")
+                                        if (task.exception.toString().contains("The email address is already in use by another account")) {
+                                            mAuth.signInWithEmailAndPassword(getEmail(), "passwordDefault").addOnCompleteListener { result ->
+                                                if (result.isSuccessful) {
+                                                    currentUser = mAuth!!.currentUser
+                                                    setListeners()
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                     }
@@ -75,15 +81,10 @@ class MainActivity : PermissionsActivity() {
             }
         }
 
-        userDataDB.child(currentUser!!.uid).child("UserScore").addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
+        if (currentUser != null) {
+            setListeners()
+        }
 
-            override fun onDataChange(p0: DataSnapshot?) {
-                tvYourScore.setText(p0!!.getValue().toString())
-            }
-        })
 
         gameButton.setOnClickListener {
             val intent = Intent(this, Game::class.java)
@@ -98,6 +99,22 @@ class MainActivity : PermissionsActivity() {
         leaderboardButton.setOnClickListener {
 
         }
+    }
+
+    private fun setListeners() {
+        FirebaseDatabase.getInstance()
+        db = FirebaseDatabase.getInstance()
+        userDataDB = db.getReference("UserData")
+
+        userDataDB.child(currentUser!!.uid).child("UserScore").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot?) {
+                tvYourScore.setText(p0!!.getValue().toString())
+            }
+        })
     }
 
     private fun getEmail(): String {
