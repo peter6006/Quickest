@@ -11,9 +11,9 @@
     <string name="tvScoreDef">0</string>
 
     <!-- GAME -->
-    <string name="gameMSG">Tap when the colour turns red</string>
+    <string name="gameMSG">Tap when the colour turns GREEN</string>
     <string name="gameMSGFinish">Finish!</string>
-    <string name="gameMSGError">You must tap when the colour is red, not when its green</string>
+    <string name="gameMSGError">You must tap when the colour is GREEN, not when its RED</string>
 
     <!-- RESULT -->
     <string name="resultMSG">Your result:</string>

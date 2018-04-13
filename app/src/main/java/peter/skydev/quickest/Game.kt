@@ -23,18 +23,22 @@ class Game : Activity() {
     private var timeToMilliSeconds = 0L
     private var timeSwapBuff = 0L
     private var updateTime = 0L
+    val handler = Handler()
 
     private fun init() {
         this.start = 0
         this.red = false
-        textToClick.setBackgroundColor(resources.getColor(R.color.colorGreen))
+        textToClick.setBackgroundColor(resources.getColor(R.color.colorRed))
         gameStep.text = "$numActualIter / $numIter"
 
         textToClick.setOnClickListener {
-            if (!red)
-                alert(resources.getText(R.string.gameMSGError).toString()) {}.show()
-
-            // TODO Stop play or restart it
+            if (!red) {
+                alert(resources.getText(R.string.gameMSGError).toString()) {
+                    title = "Too soon"
+                    positiveButton("OK") { startIter() }
+                }.show()
+                handler.removeCallbacksAndMessages(null)
+            }
         }
     }
 
@@ -63,10 +67,10 @@ class Game : Activity() {
         val randomMinutes: Double = 5 + (Math.random() * (10 - 5))
         Log.d(this.TAG, "Tiempo: " + randomMinutes)
 
-        val handler = Handler()
+
         handler.postDelayed({
             red = true
-            textToClick.setBackgroundColor(resources.getColor(R.color.colorRed))
+            textToClick.setBackgroundColor(resources.getColor(R.color.colorGreen))
             start = System.nanoTime()
 
             startTime = SystemClock.uptimeMillis()
