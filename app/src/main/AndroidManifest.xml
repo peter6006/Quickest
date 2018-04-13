@@ -29,6 +29,7 @@
         <activity
             android:name=".Result"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".Leaderboard"></activity>
     </application>
 
 </manifest>

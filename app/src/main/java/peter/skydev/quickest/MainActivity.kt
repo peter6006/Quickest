@@ -97,7 +97,8 @@ class MainActivity : PermissionsActivity() {
         }
 
         leaderboardButton.setOnClickListener {
-
+            val intent = Intent(this, Leaderboard::class.java)
+            startActivity(intent)
         }
     }
 

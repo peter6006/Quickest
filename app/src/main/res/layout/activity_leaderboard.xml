@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2#"
+                android:textColor="@color/colorBlack"
+                android:textSize="45sp" />
+
+            <TextView
+                android:id="@+id/leaderboardSecondName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="asdasdasd"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/leaderboardSecondPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45168456 points"
+                android:textColor="@color/colorBlack" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1#"
+                android:textColor="@color/colorBlack"
+                android:textSize="60sp" />
+
+            <TextView
+                android:id="@+id/leaderboardFirstName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="asdasdasd"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/leaderboardFirstPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45168456 points"
+                android:textColor="@color/colorBlack" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3#"
+                android:textColor="@color/colorBlack"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/leaderboardThirdName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="asdasdasd"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/leaderboardThirdPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45168456 points"
+                android:textColor="@color/colorBlack" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="45dp" />
+
+</LinearLayout>
