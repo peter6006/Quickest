@@ -23,5 +23,6 @@
     <string name="resultMSGBack">Back</string>
     <string name="resultAddName">With which name you want to be known?</string>
     <string name="resultAddNameExists">This name already exists</string>
+    <string name="resultUploadSuccessful">Upload successful!</string>
 
 </resources>

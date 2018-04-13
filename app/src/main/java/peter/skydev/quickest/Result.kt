@@ -137,6 +137,8 @@ class Result : Activity() {
 
                     userDataDB.child(jsonArray.getJSONObject(j).getString("appid")).child("UserPosition").setValue(j+1)
                 }
+
+                toast(resources.getString(R.string.resultUploadSuccessful))
             }
         })
     }
