@@ -34,7 +34,8 @@ class Game : Activity() {
         textToClick.setOnClickListener {
             if (!red) {
                 alert(resources.getText(R.string.gameMSGError).toString()) {
-                    title = "Too soon"
+                    title("Too soon")
+                    cancellable(false)
                     positiveButton("OK") { startIter() }
                 }.show()
                 handler.removeCallbacksAndMessages(null)
@@ -79,9 +80,12 @@ class Game : Activity() {
             textToClick.setOnClickListener {
                 textToClick.setOnClickListener {
                     if (!red)
-                        alert(resources.getText(R.string.gameMSGError).toString()) {}.show()
-
-                    // TODO Stop play or restart it
+                        alert(resources.getText(R.string.gameMSGError).toString()) {
+                            title("Too soon")
+                            cancellable(false)
+                            positiveButton("OK") { startIter() }
+                        }.show()
+                    handler.removeCallbacksAndMessages(null)
                 }
 
                 val elapsedTime = System.nanoTime() - start
