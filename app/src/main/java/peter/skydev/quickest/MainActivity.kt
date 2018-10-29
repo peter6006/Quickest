@@ -43,29 +43,7 @@ class MainActivity : PermissionsActivity() {
                         super.permissionGranted()
                         Log.v("Call permissions", "Granted")
 
-                        mAuth.createUserWithEmailAndPassword(getEmail(), "passwordDefault")
-                                .addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        Log.d(TAG, "User created successfully!")
-                                        currentUser = mAuth!!.currentUser
-                                        userDataDB.child(currentUser!!.uid).child("UserEmail").setValue(currentUser!!.email)
-                                        userDataDB.child(currentUser!!.uid).child("UserScore").setValue(0)
-                                        userDataDB.child(currentUser!!.uid).child("UserPosition").setValue(0)
-                                        userDataDB.child(currentUser!!.uid).child("UserName").setValue("")
-
-                                        setListeners()
-                                    } else {
-                                        Log.d(TAG, "There was an error creating the user")
-                                        if (task.exception.toString().contains("The email address is already in use by another account")) {
-                                            mAuth.signInWithEmailAndPassword(getEmail(), "passwordDefault").addOnCompleteListener { result ->
-                                                if (result.isSuccessful) {
-                                                    currentUser = mAuth!!.currentUser
-                                                    setListeners()
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                        signInOrLogIn()
                     }
 
                     override fun permissionDenied() {
@@ -78,7 +56,10 @@ class MainActivity : PermissionsActivity() {
                 })
             } else {
                 Log.d(TAG, "Permission granted")
+                signInOrLogIn()
             }
+        }else{
+            signInOrLogIn()
         }
 
         if (currentUser != null) {
@@ -100,6 +81,32 @@ class MainActivity : PermissionsActivity() {
             val intent = Intent(this, Leaderboard::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun signInOrLogIn(){
+        mAuth.createUserWithEmailAndPassword(getEmail(), "passwordDefault")
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "User created successfully!")
+                        currentUser = mAuth!!.currentUser
+                        userDataDB.child(currentUser!!.uid).child("UserEmail").setValue(currentUser!!.email)
+                        userDataDB.child(currentUser!!.uid).child("UserScore").setValue(0)
+                        userDataDB.child(currentUser!!.uid).child("UserPosition").setValue(0)
+                        userDataDB.child(currentUser!!.uid).child("UserName").setValue("")
+
+                        setListeners()
+                    } else {
+                        Log.d(TAG, "There was an error creating the user")
+                        if (task.exception.toString().contains("The email address is already in use by another account")) {
+                            mAuth.signInWithEmailAndPassword(getEmail(), "passwordDefault").addOnCompleteListener { result ->
+                                if (result.isSuccessful) {
+                                    currentUser = mAuth!!.currentUser
+                                    setListeners()
+                                }
+                            }
+                        }
+                    }
+                }
     }
 
     private fun setListeners() {

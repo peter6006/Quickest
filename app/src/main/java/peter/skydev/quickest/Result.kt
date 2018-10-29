@@ -114,8 +114,7 @@ class Result : Activity() {
     fun uploadToFirebase(){
         userDataDB.child(currentUser!!.uid).child("UserScore").setValue(result)
 
-        // TODO update leaderbord
-        userDataDB.orderByChild("UserScore").addValueEventListener(object : ValueEventListener {
+        userDataDB.orderByChild("UserScore").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError?) {}
 
             override fun onDataChange(p0: DataSnapshot?) {
@@ -131,11 +130,12 @@ class Result : Activity() {
                 }
 
                 for(j in 0..jsonArray.length()-1){
-                    leaderboardDataDB.child(Integer.toString(j+1)).child("appid").setValue(jsonArray.getJSONObject(j).getString("appid"))
-                    leaderboardDataDB.child(Integer.toString(j+1)).child("UserScore").setValue(jsonArray.getJSONObject(j).getInt("UserScore"))
-                    leaderboardDataDB.child(Integer.toString(j+1)).child("UserName").setValue(jsonArray.getJSONObject(j).getString("UserName"))
+                    var jsonO = jsonArray.getJSONObject(j)
+                    leaderboardDataDB.child(Integer.toString(j+1)).child("appid").setValue(jsonO.getString("appid"))
+                    leaderboardDataDB.child(Integer.toString(j+1)).child("UserScore").setValue(jsonO.getInt("UserScore"))
+                    leaderboardDataDB.child(Integer.toString(j+1)).child("UserName").setValue(jsonO.getString("UserName"))
 
-                    userDataDB.child(jsonArray.getJSONObject(j).getString("appid")).child("UserPosition").setValue(j+1)
+                    userDataDB.child(jsonO.getString("appid")).child("UserPosition").setValue(j+1)
                 }
 
                 toast(resources.getString(R.string.resultUploadSuccessful))
