@@ -8,4 +8,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorGrey">#DCDCDC</color>
     <color name="colorGrey2">#666666</color>
+    <color name="colorGold">#FFD700</color>
+    <color name="colorSilver">#C0C0C0</color>
+    <color name="colorBronze">#cd7f32</color>
 </resources>

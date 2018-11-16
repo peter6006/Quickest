@@ -8,62 +8,82 @@
     <LinearLayout
         android:id="@+id/LayoutTV"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tvPosition"
             style="@style/MainTV"
             android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/tvPosition" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/tvPosition"
+            android:textColor="@color/colorBlack" />
 
         <TextView
             android:id="@+id/tvScore"
             style="@style/MainTV"
             android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/tvScore" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/tvScore"
+            android:textColor="@color/colorBlack" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layoutYourTV"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/LayoutTV"
         android:layout_height="wrap_content"
+        android:layout_below="@id/LayoutTV"
         android:layout_marginBottom="40dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvYourPosition"
-            style="@style/MainTV2"
+        <LinearLayout
             android:layout_width="0dp"
-            android:gravity="center"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="@string/tvPositionDef"/>
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvYourName"
+                style="@style/MainTV2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/tvNameDef"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tvYourPosition"
+                style="@style/MainTV2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/tvPositionDef"
+                android:textColor="@color/colorBlack" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvYourScore"
             style="@style/MainTV2"
             android:layout_width="0dp"
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="@string/tvScoreDef"/>
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/tvScoreDef"
+            android:textColor="@color/colorBlack" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_margin="5dp"
         android:layout_below="@id/layoutYourTV"
+        android:layout_margin="5dp"
         android:background="@android:color/darker_gray" />
 
     <Button
@@ -72,7 +92,10 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginBottom="5dp"
-        android:text="@string/gameButton" />
+        android:background="@android:color/transparent"
+        android:text="@string/gameButton"
+        android:textColor="@color/colorPrimary"
+        android:textSize="26sp" />
 
     <Button
         android:id="@+id/rulesButton"
@@ -81,7 +104,10 @@
         android:layout_below="@id/gameButton"
         android:layout_centerInParent="true"
         android:layout_marginBottom="5dp"
-        android:text="@string/rulesButton" />
+        android:background="@android:color/transparent"
+        android:text="@string/rulesButton"
+        android:textColor="@color/colorPrimary"
+        android:textSize="26sp" />
 
     <Button
         android:id="@+id/leaderboardButton"
@@ -90,6 +116,9 @@
         android:layout_below="@id/rulesButton"
         android:layout_centerInParent="true"
         android:layout_marginBottom="5dp"
-        android:text="@string/leaderboardButton" />
+        android:background="@android:color/transparent"
+        android:text="@string/leaderboardButton"
+        android:textColor="@color/colorPrimary"
+        android:textSize="26sp" />
 
 </RelativeLayout>

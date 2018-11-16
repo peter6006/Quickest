@@ -7,19 +7,20 @@
     <string name="leaderboardButton">Leaderboard</string>
     <string name="tvPosition">Position</string>
     <string name="tvScore">Score</string>
+    <string name="tvNameDef">--</string>
     <string name="tvPositionDef">0</string>
     <string name="tvScoreDef">0</string>
 
     <!-- RULES -->
     <string name="rulesTitle">Quickest</string>
     <string name="rulesDescription">Easy tool to measure you reaction time.</string>
-    <string name="rulesRule1">The only thing you have to do after you press \'Play!\' is waiting for the screen to turn red. When so, press the screen to record your reaction time.</string>
+    <string name="rulesRule1">The only thing you have to do after you press \'Play!\' is waiting for the screen to turn green. When so, press the screen to record your reaction time.</string>
     <string name="rulesRule2">This process must be done 5 times to ensure a good measure and calculate a correct average.</string>
     <string name="rulesRule3">When the result is shown, you can retry or upload it to the cloud.</string>
     <string name="rulesRule4">If you choose to upload it, you have to write a name for Leaderboard purposes (you can change it when you want, but it can not be 2 identically names). Also, you have to allow us the access to your phone Email to correctly store your Score*.</string>
     <string name="rulesRuleNote">*The only data we will store is your public Email, if you want to delete it from our database, just email us and we will delete it.</string>
     <string name="rulesInformation">Additional information</string>
-    <string name="rulesInformation1">Latency on you phone will be affecting your results, this means that if you have a slow phone, you will have a worse score than others who have a better phone.</string>
+    <string name="rulesInformation1">Latency on your phone will be affecting your results, this means that if you have a slow phone, you will have a worse score than others who have a better phone.</string>
     <string name="rulesInformation2">Even the fastest phone has latency, so take that on mind. Some can add 30&#8211;50ms, others only 20&#8211;25 meanwhile the oldest can add up to 100ms.</string>
     <string name="rulesInformation3">The average reaction time for humans may vary between 200&#8211;300, so feel free to subtract some \'ms\' to your final result for personal information.</string>
     <string name="rulesInformation4">Taps lower than 100ms will be not counted as this is impossible for humans to achieve.</string>

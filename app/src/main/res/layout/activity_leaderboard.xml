@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2#"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorSilver"
                 android:textSize="45sp" />
 
             <TextView
@@ -30,14 +30,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="asdasdasd"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorSilver" />
 
             <TextView
                 android:id="@+id/leaderboardSecondPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="45168456 points"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorSilver" />
 
         </LinearLayout>
 
@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1#"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorGold"
                 android:textSize="60sp" />
 
             <TextView
@@ -61,14 +61,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="asdasdasd"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorGold" />
 
             <TextView
                 android:id="@+id/leaderboardFirstPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="45168456 points"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorGold" />
         </LinearLayout>
 
         <LinearLayout
@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3#"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorBronze"
                 android:textSize="30sp" />
 
             <TextView
@@ -91,14 +91,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="asdasdasd"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorBronze" />
 
             <TextView
                 android:id="@+id/leaderboardThirdPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="45168456 points"
-                android:textColor="@color/colorBlack" />
+                android:textColor="@color/colorBronze" />
         </LinearLayout>
 
     </LinearLayout>
