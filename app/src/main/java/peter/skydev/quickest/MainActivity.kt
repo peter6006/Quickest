@@ -12,6 +12,8 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.EditText
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -21,6 +23,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.alert
 import org.jetbrains.anko.toast
 import java.util.regex.Pattern
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 
 
 class MainActivity : PermissionsActivity() {
@@ -31,6 +35,7 @@ class MainActivity : PermissionsActivity() {
     private lateinit var userNamesDB: DatabaseReference
     private lateinit var userNamesDataSnapshot: DataSnapshot
     var userName: String = ""
+    lateinit var mAdView : AdView
 
     private lateinit var db: FirebaseDatabase
     var currentUser: FirebaseUser? = null
@@ -42,7 +47,42 @@ class MainActivity : PermissionsActivity() {
         mAuth = FirebaseAuth.getInstance()
         this.currentUser = mAuth!!.currentUser
 
-        askForPermission()
+        MobileAds.initialize(this,
+                "ca-app-pub-4855450974262250~6878071293")
+
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        mAdView.adListener = object: AdListener() {
+            override fun onAdLoaded() {
+                Log.d("MAIN", "onAdLoaded")
+            }
+
+            override fun onAdFailedToLoad(errorCode : Int) {
+                Log.d("MAIN", "onAdFailedToLoad" + errorCode)
+            }
+
+            override fun onAdOpened() {
+                Log.d("MAIN", "onAdOpened")
+            }
+
+            override fun onAdLeftApplication() {
+                Log.d("MAIN", "onAdLeftApplication")
+            }
+
+            override fun onAdClosed() {
+                Log.d("MAIN", "onAdClosed")
+            }
+        }
+
+        val permissionCheck = ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.GET_ACCOUNTS)
+        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+            askForPermission()
+        } else {
+            signInOrLogIn()
+        }
 
         if (currentUser != null) {
             setListeners()
@@ -57,7 +97,7 @@ class MainActivity : PermissionsActivity() {
             val editText = dialogView.findViewById<View>(R.id.editTextName) as EditText
 
             dialogBuilder.setMessage(resources.getString(R.string.resultAddName))
-            dialogBuilder.setPositiveButton("Save", DialogInterface.OnClickListener { dialog, whichButton ->
+            dialogBuilder.setPositiveButton("Save") { _, _ ->
                 if (!userNamesDataSnapshot.hasChild(editText.text.toString())) {
                     userDataDB.child(currentUser!!.uid).child("UserName").setValue(editText.text.toString())
 
@@ -67,10 +107,10 @@ class MainActivity : PermissionsActivity() {
                     toast(resources.getString(R.string.resultAddNameExists))
                     showNewNameDialog()
                 }
-            })
-            dialogBuilder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, whichButton ->
+            }
+            dialogBuilder.setNegativeButton("Cancel") { _, _ ->
                 //pass
-            })
+            }
             val b = dialogBuilder.create()
             b.show()
         }
@@ -108,8 +148,11 @@ class MainActivity : PermissionsActivity() {
                     override fun permissionDenied() {
                         super.permissionDenied()
                         Log.v("Call permissions", "Denied")
-                        alert("We only need your email for leaderboard purposes", "Permission") {
+                        alert("We only need access to your account in order to obtain your email for leaderboard purposes", "Permission") {
                             yesButton {
+                                askForPermission()
+                            }
+                            onCancel {
                                 askForPermission()
                             }
                         }.show()
@@ -169,34 +212,34 @@ class MainActivity : PermissionsActivity() {
         userNamesDB = db.getReference("UserNames")
 
         userDataDB.child(currentUser!!.uid).child("UserScore").addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {}
+            override fun onCancelled(p0: DatabaseError) {}
 
-            override fun onDataChange(p0: DataSnapshot?) {
+            override fun onDataChange(p0: DataSnapshot) {
                 tvYourScore.text = p0!!.value.toString()
             }
         })
 
         userDataDB.child(currentUser!!.uid).child("UserPosition").addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {}
+            override fun onCancelled(p0: DatabaseError) {}
 
-            override fun onDataChange(p0: DataSnapshot?) {
+            override fun onDataChange(p0: DataSnapshot) {
                 tvYourPosition.text = p0!!.value.toString()
             }
         })
 
         userDataDB.child(currentUser!!.uid).child("UserName").addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {}
+            override fun onCancelled(p0: DatabaseError) {}
 
-            override fun onDataChange(p0: DataSnapshot?) {
+            override fun onDataChange(p0: DataSnapshot) {
                 tvYourName.setText(p0!!.value.toString() + ":")
                 userName = p0!!.value.toString()
             }
         })
 
         userNamesDB.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {}
+            override fun onCancelled(p0: DatabaseError) {}
 
-            override fun onDataChange(p0: DataSnapshot?) {
+            override fun onDataChange(p0: DataSnapshot) {
                 userNamesDataSnapshot = p0!!
             }
         })

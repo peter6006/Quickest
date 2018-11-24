@@ -2,15 +2,14 @@ package peter.skydev.quickest
 
 import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -33,57 +32,66 @@ class Leaderboard : Activity() {
 
         val lv = findViewById<ListView>(R.id.list)
 
-        mAuth = FirebaseAuth.getInstance()
-        this.currentUser = mAuth!!.currentUser
+        val permissionCheck = ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.GET_ACCOUNTS)
+        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+            Toast.makeText(this, "You have to give permission in order to access the leaderboard", Toast.LENGTH_LONG)
+        } else {
 
-        FirebaseDatabase.getInstance()
-        db = FirebaseDatabase.getInstance()
-        leaderboardDataDB = db.getReference("Leaderboard")
+        }
 
-        leaderboardDataDB.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError?) {}
+            mAuth = FirebaseAuth.getInstance()
+            this.currentUser = mAuth!!.currentUser
 
-            override fun onDataChange(p0: DataSnapshot?) {
-                var pos = 0
-                var aux = 0
-                for (messageSnapshot in p0!!.getChildren()) {
-                    Log.d(TAG, "Snapshot: " + messageSnapshot.toString())
-                    var job = JSONObject()
-                    job.put("UserScore", messageSnapshot.child("UserScore").getValue())
-                    job.put("UserName", messageSnapshot.child("UserName").getValue())
-                    job.put("appid", messageSnapshot.child("appid").getValue())
-                    jsonArray.put(job)
+            FirebaseDatabase.getInstance()
+            db = FirebaseDatabase.getInstance()
+            leaderboardDataDB = db.getReference("Leaderboard")
 
-                    if (currentUser!!.uid.equals(messageSnapshot.child("appid").getValue())) {
-                        pos = aux
-                    } else {
-                        aux++
+            leaderboardDataDB.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {}
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    var pos = 0
+                    var aux = 0
+                    for (messageSnapshot in p0!!.getChildren()) {
+                        Log.d(TAG, "Snapshot: " + messageSnapshot.toString())
+                        var job = JSONObject()
+                        job.put("UserScore", messageSnapshot.child("UserScore").getValue())
+                        job.put("UserName", messageSnapshot.child("UserName").getValue())
+                        job.put("appid", messageSnapshot.child("appid").getValue())
+                        jsonArray.put(job)
+
+                        if (currentUser!!.uid.equals(messageSnapshot.child("appid").getValue())) {
+                            pos = aux
+                        } else {
+                            aux++
+                        }
                     }
+
+                    if (pos > 2) {
+                        pos = pos - 3
+                    } else {
+                        pos = 0
+                    }
+
+                    leaderboardFirstName.text = jsonArray.getJSONObject(0).getString("UserName")
+                    leaderboardFirstPoints.text = jsonArray.getJSONObject(0).getString("UserScore")
+
+                    leaderboardSecondName.text = jsonArray.getJSONObject(1).getString("UserName")
+                    leaderboardSecondPoints.text = jsonArray.getJSONObject(1).getString("UserScore")
+
+                    leaderboardThirdName.text = jsonArray.getJSONObject(2).getString("UserName")
+                    leaderboardThirdPoints.text = jsonArray.getJSONObject(2).getString("UserScore")
+
+                    jsonArray.remove(0)
+                    jsonArray.remove(0)
+                    jsonArray.remove(0)
+
+                    lv.adapter = ListExampleAdapter(applicationContext, jsonArray, currentUser!!)
+                    list.setSelection(pos)
                 }
+            })
 
-                if(pos>2){
-                    pos = pos - 3
-                } else {
-                    pos = 0
-                }
-
-                leaderboardFirstName.text = jsonArray.getJSONObject(0).getString("UserName")
-                leaderboardFirstPoints.text = jsonArray.getJSONObject(0).getString("UserScore")
-
-                leaderboardSecondName.text = jsonArray.getJSONObject(1).getString("UserName")
-                leaderboardSecondPoints.text = jsonArray.getJSONObject(1).getString("UserScore")
-
-                leaderboardThirdName.text = jsonArray.getJSONObject(2).getString("UserName")
-                leaderboardThirdPoints.text = jsonArray.getJSONObject(2).getString("UserScore")
-
-                jsonArray.remove(0)
-                jsonArray.remove(0)
-                jsonArray.remove(0)
-
-                lv.adapter = ListExampleAdapter(applicationContext, jsonArray, currentUser!!)
-                list.setSelection(pos)
-            }
-        })
     }
 
     private class ListExampleAdapter(context: Context, jsonArray: JSONArray, currentUser: FirebaseUser) : BaseAdapter() {

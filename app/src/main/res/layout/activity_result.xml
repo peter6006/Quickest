@@ -98,4 +98,15 @@
         android:layout_marginTop="15dp"
         android:layout_below="@id/LayoutTV"
         android:text="@string/resultMSGBack" />
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-4855450974262250/3394121856">
+    </com.google.android.gms.ads.AdView>
 </RelativeLayout>
