@@ -29,14 +29,14 @@
                 android:id="@+id/leaderboardSecondName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="asdasdasd"
+                android:text="--"
                 android:textColor="@color/colorSilver" />
 
             <TextView
                 android:id="@+id/leaderboardSecondPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="45168456 points"
+                android:text="-- points"
                 android:textColor="@color/colorSilver" />
 
         </LinearLayout>
@@ -60,14 +60,14 @@
                 android:id="@+id/leaderboardFirstName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="asdasdasd"
+                android:text="--"
                 android:textColor="@color/colorGold" />
 
             <TextView
                 android:id="@+id/leaderboardFirstPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="45168456 points"
+                android:text="-- points"
                 android:textColor="@color/colorGold" />
         </LinearLayout>
 
@@ -90,14 +90,14 @@
                 android:id="@+id/leaderboardThirdName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="asdasdasd"
+                android:text="--"
                 android:textColor="@color/colorBronze" />
 
             <TextView
                 android:id="@+id/leaderboardThirdPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="45168456 points"
+                android:text="-- points"
                 android:textColor="@color/colorBronze" />
         </LinearLayout>
 

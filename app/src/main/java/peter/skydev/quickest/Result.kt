@@ -169,8 +169,17 @@ class Result : Activity() {
                     jsonArray.put(job)
                 }
 
+                var jsonArrayFinal = JSONArray()
+
                 for(j in 0..jsonArray.length()-1){
                     var jsonO = jsonArray.getJSONObject(j)
+                    if(jsonO.getInt("UserScore") != 0) {
+                        jsonArrayFinal.put(jsonO)
+                    }
+                }
+
+                for(j in 0..jsonArrayFinal.length()-1){
+                    var jsonO = jsonArrayFinal.getJSONObject(j)
                     if(jsonO.getInt("UserScore") != 0) {
                         leaderboardDataDB.child(Integer.toString(j + 1)).child("appid").setValue(jsonO.getString("appid"))
                         leaderboardDataDB.child(Integer.toString(j + 1)).child("UserScore").setValue(jsonO.getInt("UserScore"))
