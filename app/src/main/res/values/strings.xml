@@ -3,6 +3,7 @@
 
     <!-- MAIN -->
     <string name="gameButton">Play!</string>
+    <string name="gameButton2">Play2</string>
     <string name="rulesButton">Rules</string>
     <string name="leaderboardButton">Leaderboard</string>
     <string name="tvPosition">Position</string>

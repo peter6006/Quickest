@@ -120,6 +120,12 @@ class MainActivity : PermissionsActivity() {
             startActivity(intent)
         }
 
+        gameButton2.setOnClickListener {
+            val intent = Intent(this, Game2::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         rulesButton.setOnClickListener {
             val intent = Intent(this, Rules::class.java)
             startActivity(intent)

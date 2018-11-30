@@ -98,6 +98,18 @@
         android:textSize="26sp" />
 
     <Button
+        android:id="@+id/gameButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="5dp"
+        android:background="@android:color/transparent"
+        android:text="@string/gameButton2"
+        android:layout_toRightOf="@id/gameButton"
+        android:textColor="@color/colorPrimary"
+        android:textSize="26sp" />
+
+    <Button
         android:id="@+id/rulesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
